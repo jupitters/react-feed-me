@@ -34,7 +34,7 @@ function App() {
     <>
       <AppErrorBoundary>
           <Routes>
-              <Route path="/"></Route>
+              <Route path="/" element={<DashboardRoute />} />
           </Routes>
       </AppErrorBoundary>
     </>
