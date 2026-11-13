@@ -2,6 +2,7 @@ import {Component, type ReactNode, Suspense} from "react";
 import {ErrorState} from "./components/ErrorState.tsx";
 import {Route, Routes, useSearchParams} from "react-router-dom";
 import {LoadingScreen} from "./components/LoadingScreen.tsx";
+import {AppShell} from "./components/AppShell.tsx";
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unknown }> {
     override state = {error: null as unknown};
@@ -24,7 +25,7 @@ function DashboardRoute() {
     const activeUserId = searchParams.get('user') ?? 'u1';
 
     return <Suspense fallback={<LoadingScreen />}>
-
+        <AppShell activeUserId={activeUserId} />
     </Suspense>
 }
 
