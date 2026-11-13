@@ -1,6 +1,6 @@
-import {Component, type ReactNode} from "react";
+import {Component, type ReactNode, Suspense} from "react";
 import {ErrorState} from "./components/ErrorState.tsx";
-import {Route, Routes} from "react-router-dom";
+import {Route, Routes, useSearchParams} from "react-router-dom";
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unknown }> {
     override state = {error: null as unknown};
@@ -16,6 +16,13 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unkno
 
         return this.props.children;
     }
+}
+
+function DashboardRoute() {
+    const [searchParams] = useSearchParams();
+    const activeUserId = searchParams.get('user') ?? 'u1';
+
+    return <Suspense fallback={}></Suspense>
 }
 
 function App() {
