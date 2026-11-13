@@ -1,4 +1,6 @@
 import {Component, type ReactNode} from "react";
+import {ErrorState} from "./components/ErrorState.tsx";
+import {Route, Routes} from "react-router-dom";
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unknown }> {
     override state = {error: null as unknown};
@@ -9,7 +11,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unkno
 
     override render() {
         if(this.state.error) {
-
+            return <ErrorState error={this.state.error} />
         }
 
         return this.props.children;
@@ -19,7 +21,11 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { error: unkno
 function App() {
   return (
     <>
-      oi
+      <AppErrorBoundary>
+          <Routes>
+              <Route path="/"></Route>
+          </Routes>
+      </AppErrorBoundary>
     </>
   )
 }
