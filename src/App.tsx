@@ -1,6 +1,6 @@
 import {Component, type ReactNode, Suspense} from "react";
 import {ErrorState} from "./components/ErrorState.tsx";
-import {Route, Routes, useSearchParams} from "react-router-dom";
+import {Navigate, Route, Routes, useSearchParams} from "react-router-dom";
 import {LoadingScreen} from "./components/LoadingScreen.tsx";
 import {AppShell} from "./components/AppShell.tsx";
 
@@ -35,6 +35,7 @@ function App() {
       <AppErrorBoundary>
           <Routes>
               <Route path="/" element={<DashboardRoute />} />
+              <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
       </AppErrorBoundary>
     </>
