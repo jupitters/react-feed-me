@@ -35,3 +35,9 @@ export type PostResponse = {
     createdAt: string;
 }
 
+export type FollowingResponse = {
+    followerId: string;
+    targetUserIds: string[];
+    totalFollowing: number;
+}
+
