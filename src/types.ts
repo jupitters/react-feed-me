@@ -41,3 +41,9 @@ export type FollowingResponse = {
     totalFollowing: number;
 }
 
+export type FollowResponse = {
+    followerId: string;
+    targetUserId: string;
+    following: boolean;
+    totalFollowing: number;
+}
