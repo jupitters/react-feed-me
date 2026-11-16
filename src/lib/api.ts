@@ -16,5 +16,9 @@ async function request<T>(path: string, init?:RequestInit): Promise<T> {
     return response.json() as Promise<T>;
 }
 
+export const feedApi = {
+    getUsers: () => request<UserProfile[]>("/users"),
+    getFollowing: (followerId: string) => request<FollowingResponse>(`/follows?followerId=${followerId}`),
 
+}
 
