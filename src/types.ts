@@ -19,7 +19,7 @@ export type FeedItem = {
 }
 
 export type TimelinePageResponse = {
-    timelinieOwnerId: string,
+    timelineOwnerId: string,
     mode: 'HOME' | "USER" | string;
     totalItems: number;
     items: FeedItem[];
