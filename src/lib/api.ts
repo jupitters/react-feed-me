@@ -47,6 +47,11 @@ export const feedApi = {
                 content
             })
         }),
-
+    followUser: (followerId: string, targetUserId: string) => request<FollowResponse>(
+        `/follows/${encodeURIComponent(targetUserId)}?followerId=${encodeURIComponent(followerId)}`,
+        {method: 'POST'}),
+    unfollowUser: (followerId: string, targetUserId: string) => request<FollowResponse>(
+        `/follows/${encodeURIComponent(targetUserId)}?followerId=${encodeURIComponent(followerId)}`,
+        {method: 'DELETE'}),
 }
 
