@@ -47,3 +47,10 @@ export type FollowResponse = {
     following: boolean;
     totalFollowing: number;
 }
+
+export type DashboardData = {
+    users: UserProfile[];
+    following: FollowingResponse;
+    homeFeed: TimelinePageResponse;
+    profileFeed: TimelinePageResponse;
+}
