@@ -37,5 +37,16 @@ export const feedApi = {
 
         return request<TimelinePageResponse>(`/feed/user/${encodeURIComponent(userId)}?${params.toString()}`)
     },
+    createPost: (authorId: string, content: string) => request<PostResponse>(
+        '/posts',
+        {
+            method: 'POST',
+            body: JSON.stringify({
+                idempotencyKey: createIdempotencyKey(),
+                authorId,
+                content
+            })
+        }),
+
 }
 
