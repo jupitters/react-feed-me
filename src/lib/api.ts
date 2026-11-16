@@ -18,7 +18,24 @@ async function request<T>(path: string, init?:RequestInit): Promise<T> {
 
 export const feedApi = {
     getUsers: () => request<UserProfile[]>("/users"),
-    getFollowing: (followerId: string) => request<FollowingResponse>(`/follows?followerId=${followerId}`),
+    getFollowing: (followerId: string) => request<FollowingResponse>(`/follows?followerId=${encodeURIComponent(followerId)}`),
+    getHomeFeed: (userId: string, cursor?: string | null) => {
+        const params = new URLSearchParams({userId, limit: '5'});
 
+        if(cursor){
+            params.set('cursor', cursor);
+        }
+
+        return request<TimelinePageResponse>(`/feed/home?${params.toString()}`)
+    },
+    getUserFeed: (userId: string, cursor?: string | null) => {
+        const params = new URLSearchParams({userId, limit: '5'});
+
+        if(cursor){
+            params.set('cursor', cursor);
+        }
+
+        return request<TimelinePageResponse>(`/feed/user/${encodeURIComponent(userId)}?${params.toString()}`)
+    },
 }
 
