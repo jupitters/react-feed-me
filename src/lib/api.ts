@@ -53,6 +53,18 @@ export const feedApi = {
     unfollowUser: (followerId: string, targetUserId: string) => request<FollowResponse>(
         `/follows/${encodeURIComponent(targetUserId)}?followerId=${encodeURIComponent(followerId)}`,
         {method: 'DELETE'}),
+    async getDashboardData(activeUserId: string): Promise<DashboardData> {
+        const [users, following, homeFeed, profileFeed] = await Promise.all(
+            [
+                this.getUsers(),
+                this.getFollowing(activeUserId),
+                this.getHomeFeed(activeUserId),
+                this.getUserFeed(activeUserId)
+            ]
+        )
+
+        return {users, following, homeFeed, profileFeed};
+    }
 }
 
 function createIdempotencyKey() {
