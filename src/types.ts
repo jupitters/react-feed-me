@@ -25,3 +25,13 @@ export type TimelinePageResponse = {
     items: FeedItem[];
     nextCursor: string | null;
 }
+
+export type PostResponse = {
+    id: string;
+    authorId: string;
+    authorHandle: string;
+    authorName: string;
+    content: string;
+    createdAt: string;
+}
+
