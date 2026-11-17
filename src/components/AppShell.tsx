@@ -1,6 +1,7 @@
 import {useNavigate, useSearchParams} from "react-router-dom";
 import {useFeedmeDashboard} from "../hooks/use-feedme-dashboard.ts";
 import {useState} from "react";
+import {FiSearch} from "react-icons/fi";
 
 type AppShellProps = {
     activeUserId: string;
@@ -50,6 +51,35 @@ export function AppShell({activeUserId}: AppShellProps) {
                 </label>
             </div>
         </header>
-        <main></main>
+        <main className="workspace three-column">
+            <section className="column-stack">
+                <section className="panel roster-panel">
+                    <div className="panel-header panel-header-search">
+                        <div className="panel-title-with-search">
+                            <p className="eyebrow">Following</p>
+                            <div className="panel-title-row">
+                                <h2>{activeUser.name}</h2>
+                                <button
+                                    aria-expanded={isSearchOpen}
+                                    aria-label={isSearchOpen ? 'Hide Search': 'Show Search'}
+                                    className="icon-button"
+                                    type="button"
+                                    onClick={() => setIsSearchOpen((prev) => !prev)}>
+                                    <FiSearch />
+                                </button>
+                            </div>
+                            {isSearchOpen ? (
+                                <input
+                                    aria-label="Search Peaople"
+                                    className="search-input"
+                                    placeholder="Search"
+                                    value={searchQuery}
+                                    onChange={(event) => setSearchQuery(event.target.value)} />
+                            ) : null}
+                        </div>
+                    </div>
+                </section>
+            </section>
+        </main>
     </div>
 }
