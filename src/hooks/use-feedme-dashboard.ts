@@ -14,6 +14,8 @@ export function useFeedmeDashboard(activeUserId: string) {
         [activeUserId, initialData.users]
     );
 
+    const [followingIds, setFollowingIds] = useState<string[]>(initialData.following.targetUserIds);
+
     const deferredSearchQuery = useDeferredValue(searchQuery);
 
     const filteredUsers = useMemo(() => {
@@ -33,6 +35,7 @@ export function useFeedmeDashboard(activeUserId: string) {
         activeUser,
         searchQuery,
         setSearchQuery,
-        filteredUsers
+        filteredUsers,
+        followingIds
     }
 }
