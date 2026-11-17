@@ -11,6 +11,7 @@ export function AppShell({activeUserId}: AppShellProps) {
     const [searchParams] = useSearchParams();
 
     const {
+        users,
         activeUser,
         searchQuery,
         setSearchQuery,
@@ -31,6 +32,24 @@ export function AppShell({activeUserId}: AppShellProps) {
                 <h1>FeedMe</h1>
                 <p>Social Feed</p>
             </div>
+            <div className="topbar-actions">
+                <label className="toolbar-select-label">
+                    Viewer
+                    <select className="toolbar-select" value={activeUserId}
+                            onChange={(event) => {
+                                const params = new URLSearchParams(searchParams);
+                                params.set('user', event.target.value);
+                                navigate({search: params.toString()});
+                            }}>
+                        {users.map((user) => (
+                            <option key={user.id} value={user.id}>
+                                {user.name}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            </div>
         </header>
+        <main></main>
     </div>
 }
