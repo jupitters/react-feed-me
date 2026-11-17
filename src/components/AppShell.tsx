@@ -26,6 +26,10 @@ export function AppShell({activeUserId}: AppShellProps) {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
 
     const [followBusyId, setFollowBusyId] = useState<string | null>(null);
+    
+    const followedUsers = filteredUsers.filter((user) => user.id !== activeUserId && followingIds.includes(user.id));
+
+    const suggestedUsers = filteredUsers.filter((user) => user.id !== activeUserId && !followingIds.includes(user.id));
 
     return <div className="page-shell">
         <header className="topbar">
@@ -77,6 +81,10 @@ export function AppShell({activeUserId}: AppShellProps) {
                                     onChange={(event) => setSearchQuery(event.target.value)} />
                             ) : null}
                         </div>
+                    </div>
+                    <div className="user-list">
+                        {followedUsers.length > 0 ? renderUserCards('followed')
+                        : <p className="empty-text">No followed users...</p> }
                     </div>
                 </section>
             </section>
