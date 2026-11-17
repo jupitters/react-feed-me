@@ -17,12 +17,12 @@ export function useFeedmeDashboard(activeUserId: string) {
 
     const [followingIds, setFollowingIds] = useState<string[]>(initialData.following.targetUserIds);
 
-    const [selectTimelineUserId, setSelectTimelineUserId] = useState(activeUserId);
+    const [selectedTimelineUserId, setSelectedTimelineUserId] = useState(activeUserId);
 
     const deferredSearchQuery = useDeferredValue(searchQuery);
 
     const filteredUsers = useMemo(() => {
-        const query = defferedSearchQuey.trim().toLowerCase();
+        const query = deferredSearchQuery.trim().toLowerCase();
         if(!query) {
             return initialData.users;
         }
@@ -34,7 +34,7 @@ export function useFeedmeDashboard(activeUserId: string) {
     }, [deferredSearchQuery, initialData.users])
 
     function selectTimelineUser(user: UserProfile) {
-        setSelectTimelineUserId(user.id);
+        setSelectedTimelineUserId(user.id);
     }
 
     async function handleFollowToggle(targetUserId: string): Promise<FollowResponse> {
@@ -55,7 +55,7 @@ export function useFeedmeDashboard(activeUserId: string) {
         setSearchQuery,
         filteredUsers,
         followingIds,
-        selectTimelineUserId,
+        selectedTimelineUserId,
         selectTimelineUser,
         handleFollowToggle
     }
