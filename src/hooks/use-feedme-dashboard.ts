@@ -1,6 +1,7 @@
 import {use, useDeferredValue, useMemo, useState} from "react";
 import {getDashboardResource} from "../lib/dashboard-resource.ts";
-import type {DashboardData} from "../types.ts";
+import type {DashboardData, FollowResponse, UserProfile} from "../types.ts";
+import {feedApi} from "../lib/api.ts";
 
 export function useFeedmeDashboard(activeUserId: string) {
     const dashboardPromise = useMemo(() => getDashboardResource(activeUserId), [activeUserId]);
@@ -16,6 +17,8 @@ export function useFeedmeDashboard(activeUserId: string) {
 
     const [followingIds, setFollowingIds] = useState<string[]>(initialData.following.targetUserIds);
 
+    const [selectTimelineUserId, setSelectTimelineUserId] = useState(activeUserId);
+
     const deferredSearchQuery = useDeferredValue(searchQuery);
 
     const filteredUsers = useMemo(() => {
@@ -30,12 +33,30 @@ export function useFeedmeDashboard(activeUserId: string) {
         })
     }, [deferredSearchQuery, initialData.users])
 
+    function selectTimelineUser(user: UserProfile) {
+        setSelectTimelineUserId(user.id);
+    }
+
+    async function handleFollowToggle(targetUserId: string): Promise<FollowResponse> {
+        const currentlyFollowing = followingIds.includes(targetUserId);
+        const response = currentlyFollowing
+        ? await feedApi.unfollowUser(activeUserId, targetUserId)
+        : await feedApi.followUser(activeUserId, targetUserId);
+
+        setFollowingIds((previous) => currentlyFollowing ? previous.filter((id) => id !== targetUserId) : [...previous, targetUserId])
+
+        return response;
+    }
+
     return {
         users: initialData.users,
         activeUser,
         searchQuery,
         setSearchQuery,
         filteredUsers,
-        followingIds
+        followingIds,
+        selectTimelineUserId,
+        selectTimelineUser,
+        handleFollowToggle
     }
 }
